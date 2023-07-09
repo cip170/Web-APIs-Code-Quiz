@@ -5,11 +5,14 @@ var welcomeEl = document.querySelector(".welcome");
 var quizEl = document.querySelector(".quiz");
 var questionEl = document.querySelector('.question');
 var endGameEl = document.querySelector('.endGame');
-var secondsEl = document.querySelector('#seconds')
+var secondsEl = document.querySelector('#seconds');
+var timeSpentEl = document.querySelector('#timeSpent');
+var scoreEl = document.querySelector('#score')
 
 var currentQuestion = 0;
 var secondsElapsed = 0;
 var timer;
+var score = 0;
 
 const myQuestions = [
     {
@@ -53,7 +56,8 @@ function startGame() {
     renderQuestion()
     // start timer
     timer = setInterval(() => {
-        console.log('tick')
+        secondsElapsed++;
+        secondsEl.textContent = secondsElapsed
     }, 1000);
 
     // function(()=>{}, _)
@@ -86,8 +90,12 @@ function renderQuestion() {
 }
 
 function evaluateAnswer(e) {
-    console.log('clicked on option', e.target.id)
+    console.log(e.target.id === myQuestions[currentQuestion].answer)
     // correct or incorrect ?
+    if (e.target.id === myQuestions[currentQuestion].answer){
+        // increase score
+        score+=1;
+    }
 
     // move to next question if there are more
     if (currentQuestion < myQuestions.length - 1) {
@@ -106,4 +114,7 @@ quizEl.classList.add("invisible");
  // remove invisible from the endGameEl
  endGameEl.classList.remove("invisible");
  clearInterval(timer)
+
+ timeSpentEl.textContent = secondsElapsed
+ scoreEl.textContent = score
 }
