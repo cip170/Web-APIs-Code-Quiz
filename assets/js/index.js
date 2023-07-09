@@ -190,19 +190,45 @@ function renderQuestion() {
     }
 }
 
-function evaluateAnswer(e) {
+
+// Code if I don't want to display correct or incorrect
+/*function evaluateAnswer(e) {
     console.log(e.target.id === myQuestions[currentQuestion].answer)
     // correct or incorrect ?
     if (e.target.id === myQuestions[currentQuestion].answer) {
         // increase score
         score += 10;
-    }
+    }*/
+
+    function evaluateAnswer(e) {
+        var chosenAnswerId = e.target.id;
+        var correctAnswerId = myQuestions[currentQuestion].answer;
+      
+        var isCorrect = chosenAnswerId === correctAnswerId;
+      
+        var message = isCorrect ? 'Correct!' : 'Incorrect!';
+        questionEl.innerHTML += `<p>${message}</p>`;
+      
+        // Update score if the answer is correct
+        if (isCorrect) {
+          score += 10;
+        }
+
+        // Disable option buttons after selecting an answer
+
+        var optionButtonsList = document.querySelectorAll('.option-btn');
+
+        optionButtonsList.forEach(function(button) {
+
+            button.removeEventListener('click', evaluateAnswer);
+            button.disabled = true;
+  });
 
     // move to next question if there are more
     if (currentQuestion < myQuestions.length - 1) {
 
         currentQuestion++;
-        renderQuestion()
+        setTimeout(renderQuestion, 1000);
 
     } else {
         gameOver()
