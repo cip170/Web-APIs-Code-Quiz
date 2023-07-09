@@ -1,0 +1,143 @@
+.body {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.welcome {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: cursive, Arial, Helvetica, sans-serif;
+}
+
+
+.welcome h3 {
+    display: inline-block;
+    text-align: center;
+    max-width: 581px;
+    word-wrap: break-word;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+#startButton {
+    display: block;
+    align-content: center;
+    margin-top: 30px;
+    padding: 5px 10px;
+    background-color: rgb(98, 34, 98);
+    color: azure;
+}
+
+#startButton:hover {
+    cursor: pointer;
+}
+
+.invisible {
+    display: none;
+}
+
+.question {
+    text-align: center;
+}
+
+.question h3 {
+    text-align: center;
+    font-size: 20px;
+    margin-left: 3em;
+}
+
+.question ul {
+    display: inline-grid;
+    list-style: none;
+    padding-left: 40px;
+    padding-right: 40px;
+    justify-items: left;
+}
+
+.options-container {
+    display: inline-block;
+    border: 1px solid #000000;
+    margin-top: 20px;
+    margin-left: 50px;
+
+}
+
+.option-btn {
+    margin-top: 10px;
+}
+
+.option-btn:hover {
+    cursor: pointer;
+}
+
+h3 {
+    text-align: center;
+    font-size: 24px;
+}
+
+#scoreboard {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#scoreboard th {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  #scoreboard td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  #scoreboard tr:last-child td {
+    border-bottom: none;
+  }
+
+  #scoreboard .initials,
+  #scoreboard .score {
+    width: 50%;
+    position: relative;
+  }
+
+  #scoreboard th:first-child,
+  #scoreboard td:first-child{
+    text-align: center;
+    border-right: 1px solid #ddd;
+  }
+
+ .highscores-container {
+    position: relative;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+ }
+
+ .button-container {
+    text-align: center;
+    margin-top: 30px;
+ }
+
+@media screen and (min-width: 600px) {
+    .options-container ul {
+      flex-direction: column;
+    }
+    
+    .options-container li {
+      flex-basis: 100%;
+    }
+  }

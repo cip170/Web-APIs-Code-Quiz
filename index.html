@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>JavaScript Quiz</title>
+</head>
+
+<body>
+
+    <div class="welcome">
+        <h1>Coding Quiz Challenge</h1>
+        <h3>Try to answer the following code-related questions as quickly as possible.</h3>
+        <h3>Aim to beat your highscore each time you play!</h3>
+        <h3>Good luck!</h3>
+        <button id="startButton">Start Quiz</button>
+    </div>
+    <div class="quiz invisible">
+        <div>Time spent: <span id="seconds">0</span></div>
+        <div class="question">
+            <!-- <h3>Question text here</h3>
+            <ul>
+            <li><button>a</button></li>
+            <li><button>b</button></li>
+            <li><button>c</button></li>
+            <li><button>d</button></li>
+            </ul> -->
+        </div>
+    </div>
+    <div class="endGame invisible">
+        <p>Time spent: <span id="timeSpent"></span> seconds</p>
+        <p>Final Score: <span id="score"></span></p>
+        <form id="enterScoreForm">
+            <label for="initials">Enter your initials:</label>
+            <input type="text" name="initials" id="initials" required />
+            <button type="submit">Submit</button>
+        </form>
+
+        <h3>Scoreboard</h3>
+        <div class="highscores-container">
+        <table id="scoreboard">
+            <thead>
+                <tr>
+                    <th>Initials</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- <tr>
+                    <td>HI</td>
+                    <td>100</td>
+                </tr> -->
+            </tbody>
+        </table>
+        <div class="button-container">
+        <button id="clear">Clear History</button>
+        <button id="restartGame">Play Again</button>
+        </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/index.js"></script>
+</body>
+
+</html>
