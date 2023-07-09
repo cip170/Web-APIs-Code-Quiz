@@ -1,6 +1,4 @@
 var startButton = document.querySelector("#startButton");
-startButton.addEventListener("click", startGame);
-
 var welcomeEl = document.querySelector(".welcome");
 var quizEl = document.querySelector(".quiz");
 var questionEl = document.querySelector('.question');
@@ -8,11 +6,16 @@ var endGameEl = document.querySelector('.endGame');
 var secondsEl = document.querySelector('#seconds');
 var timeSpentEl = document.querySelector('#timeSpent');
 var scoreEl = document.querySelector('#score')
+var enterScoreForm = document.querySelector('#enterScoreForm')
 
 var currentQuestion = 0;
 var secondsElapsed = 0;
 var timer;
 var score = 0;
+
+startButton.addEventListener("click", startGame);
+enterScoreForm.addEventListener('submit', recordScore)
+
 
 const myQuestions = [
     {
@@ -92,9 +95,9 @@ function renderQuestion() {
 function evaluateAnswer(e) {
     console.log(e.target.id === myQuestions[currentQuestion].answer)
     // correct or incorrect ?
-    if (e.target.id === myQuestions[currentQuestion].answer){
+    if (e.target.id === myQuestions[currentQuestion].answer) {
         // increase score
-        score+=1;
+        score += 1;
     }
 
     // move to next question if there are more
@@ -108,13 +111,36 @@ function evaluateAnswer(e) {
     }
 }
 
-function gameOver(){
- // add invisible to quizEl
-quizEl.classList.add("invisible");
- // remove invisible from the endGameEl
- endGameEl.classList.remove("invisible");
- clearInterval(timer)
+function gameOver() {
+    // add invisible to quizEl
+    quizEl.classList.add("invisible");
+    // remove invisible from the endGameEl
+    endGameEl.classList.remove("invisible");
+    clearInterval(timer)
 
- timeSpentEl.textContent = secondsElapsed
- scoreEl.textContent = score
+    timeSpentEl.textContent = secondsElapsed
+    scoreEl.textContent = score
 }
+
+function recordScore(e) {
+    e.preventDefault()
+    const formData = new FormData(enterScoreForm)
+
+    // read local Storage
+    const scoresFromStorage =
+        JSON.parse(
+            localStorage.getItem('quizScores')
+        )
+        || []
+
+    // modify
+    scoresFromStorage.push({
+        initials: formData.get('initials'),
+        score
+    })
+
+    // write localStorage
+    localStorage.setItem('quizScores', JSON.stringify(scoresFromStorage))
+
+}
+
