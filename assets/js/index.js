@@ -17,11 +17,29 @@ var timer;
 var score = 0;
 
 startButton.addEventListener("click", startGame);
-enterScoreForm.addEventListener('submit', recordScore)
-clearBtn.addEventListener('click', ()=>{
+enterScoreForm.addEventListener('submit', recordScore)  
+clearBtn.addEventListener('click', () => {
+    const currentPlayerInitials = enterScoreForm.elements['initials'].value;
+    
+    // Read scores from localStorage
+    const scoresFromStorage = JSON.parse(localStorage.getItem('quizScores')) || [];
+    
+    // Filter out scores belonging to the current player
+    const updatedScores = scoresFromStorage.filter(
+      (entry) => entry.initials !== currentPlayerInitials
+    );
+    
+    // Write the updated scores to localStorage
+    localStorage.setItem('quizScores', JSON.stringify(updatedScores));
+    
+    renderTable();
+  });
+
+/*clearBtn.addEventListener('click', ()=>{
     localStorage.setItem('quizScores', JSON.stringify([]))
+    
     renderTable()
-})
+})*/
 
 const myQuestions = [
     {
@@ -84,6 +102,46 @@ const myQuestions = [
         },
         answer: 'a'
     },
+    {
+        text: "What is the purpose of the splice() method in JavaScript?",
+        options: {
+            a: "To add elements to an array at a specified index",
+            b: "To extract a portion of an array into a new array",
+            c: "To remove elements from an arrray and replace them with new elements",
+            d: "To sort the elements of an array",
+        },
+        answer: 'c'
+    },
+    {
+        text: "What is the purpose of the map method in JavaScript?",
+        options: {
+            a: "To fiter an array based on a condition",
+            b: "To perform a specified operation on each element of an array and return a new array",
+            c: "To check if at least one element in an array satisfies a condition",
+            d: "To iterate over an array and modify its elements",
+        },
+        answer: 'b'
+    },
+    {
+        text: "What is the difference between null and undefined in JavaScript?",
+        options: {
+            a: "null is used for numeric values while undefined is used for string values",
+            b: "They have the same meaning and can be used interchangeably",
+            c: "null is a keyword while undefined is a global object",
+            d: "null represents the absence of a value, while undefined indicates an unitialised variable",
+        },
+        answer: 'd'
+    },
+    {
+        text: "What does setTimeout() function do in JavaScript?",
+        options: {
+            a: "Returns the current timestamp in milliseconds",
+            b: "Pauses the execution of the program for a specified time",
+            c: "Sets the interval for executing a function repeatedly",
+            d: "Executes a function after a specified delay",
+        },
+        answer: 'd'
+    },
 ]
 
 function startGame() {
@@ -137,7 +195,7 @@ function evaluateAnswer(e) {
     // correct or incorrect ?
     if (e.target.id === myQuestions[currentQuestion].answer) {
         // increase score
-        score += 1;
+        score += 10;
     }
 
     // move to next question if there are more
@@ -170,9 +228,12 @@ function renderTable() {
         JSON.parse(
             localStorage.getItem('quizScores')
         )
-        || []
+        || [];
 
-    tableBody.innerHTML = ''
+// Sort scores in descending order based on score value
+scoresFromStorage.sort((a, b) => b.score - a.score);
+
+    tableBody.innerHTML = '';
 
     scoresFromStorage.forEach((entry) => {
         var row = document.createElement('tr')
@@ -195,27 +256,35 @@ restartGame.addEventListener("click", function() {
 });
 
 function recordScore(e) {
-    e.preventDefault()
-    const formData = new FormData(enterScoreForm)
-
-    // read local Storage
-    const scoresFromStorage =
-        JSON.parse(
-            localStorage.getItem('quizScores')
-        )
-        || []
-
-    // modify
-    scoresFromStorage.push({
-        initials: formData.get('initials'),
-        score
-    })
-
-    // write localStorage
-    localStorage.setItem('quizScores', JSON.stringify(scoresFromStorage))
-
-    enterScoreForm.reset()
-
-    renderTable()
-
-}
+    e.preventDefault();
+    const formData = new FormData(enterScoreForm);
+    const currentPlayerInitials = formData.get('initials');
+    const currentPlayerScore = score;
+  
+    const scoresFromStorage = JSON.parse(localStorage.getItem('quizScores')) || [];
+  
+    // Check if the current player's initials already exist in the scores
+    const existingScore = scoresFromStorage.find(
+      (entry) => entry.initials === currentPlayerInitials
+    );
+  
+    if (existingScore) {
+      // If the current player's score is higher, update the existing score
+      if (currentPlayerScore > existingScore.score) {
+        existingScore.score = currentPlayerScore;
+      }
+    } else {
+      // Add the current player's score to the scores list
+      scoresFromStorage.push({
+        initials: currentPlayerInitials,
+        score: currentPlayerScore,
+      });
+    }
+  
+    // Write the updated scores to localStorage
+    localStorage.setItem('quizScores', JSON.stringify(scoresFromStorage));
+  
+    enterScoreForm.reset();
+  
+    renderTable();
+  }
