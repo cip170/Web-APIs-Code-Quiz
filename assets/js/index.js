@@ -4,6 +4,12 @@ startButton.addEventListener("click", startGame);
 var welcomeEl = document.querySelector(".welcome");
 var quizEl = document.querySelector(".quiz");
 var questionEl = document.querySelector('.question');
+var endGameEl = document.querySelector('.endGame');
+var secondsEl = document.querySelector('#seconds')
+
+var currentQuestion = 0;
+var secondsElapsed = 0;
+var timer;
 
 const myQuestions = [
     {
@@ -45,16 +51,59 @@ function startGame() {
     quizEl.classList.remove('invisible')
 
     renderQuestion()
+    // start timer
+    timer = setInterval(() => {
+        console.log('tick')
+    }, 1000);
+
+    // function(()=>{}, _)
 }
 
 function renderQuestion() {
     questionEl.innerHTML = `
-        <h3>${myQuestions[0].text}</h3>
+        <h3>${myQuestions[currentQuestion].text}</h3>
             <ul>
-            <li><button>${myQuestions[0].options.a}</button></li>
-            <li><button>${myQuestions[0].options.b}</button></li>
-            <li><button>${myQuestions[0].options.c}</button></li>
-            <li><button>${myQuestions[0].options.d}</button></li>
+            <li>
+            <button class="option-btn" id="a">${myQuestions[currentQuestion].options.a}</button>
+            </li>
+            <li>
+            <button class="option-btn" id="b">${myQuestions[currentQuestion].options.b}</button>
+            </li>
+            <li>
+            <button class="option-btn" id="c">${myQuestions[currentQuestion].options.c}</button>
+            </li>
+            <li>
+            <button class="option-btn" id="d">${myQuestions[currentQuestion].options.d}</button>
+            </li>
             </ul>
     `
+
+    var optionButtonsList = (document.querySelectorAll('.option-btn'))
+
+    for (let i = 0; i < optionButtonsList.length; i++) {
+        (optionButtonsList[i]).addEventListener('click', evaluateAnswer)
+    }
+}
+
+function evaluateAnswer(e) {
+    console.log('clicked on option', e.target.id)
+    // correct or incorrect ?
+
+    // move to next question if there are more
+    if (currentQuestion < myQuestions.length - 1) {
+
+        currentQuestion++;
+        renderQuestion()
+
+    } else {
+        gameOver()
+    }
+}
+
+function gameOver(){
+ // add invisible to quizEl
+quizEl.classList.add("invisible");
+ // remove invisible from the endGameEl
+ endGameEl.classList.remove("invisible");
+ clearInterval(timer)
 }

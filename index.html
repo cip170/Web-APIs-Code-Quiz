@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>JavaScript Quiz</title>
 </head>
+
 <body>
-    
+
     <div class="welcome">
         <h1>Welcome</h1>
         <button id="startButton">Start Quiz</button>
     </div>
     <div class="quiz invisible">
+        <div>Time spent: <span id="seconds">0</span></div>
         <div class="question">
             <!-- <h3>Question text here</h3>
             <ul>
@@ -23,7 +26,11 @@
             </ul> -->
         </div>
     </div>
+    <div class="endGame invisible">
+        the game is over
+    </div>
 
     <script src="./assets/js/index.js"></script>
 </body>
+
 </html>
