@@ -1,3 +1,11 @@
 .headContainer {
     border: 2px solid red;
 }
+
+.invisible {
+    display: none;
+}
+
+.question ul {
+    list-style: none;
+}
